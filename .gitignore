@@ -39,3 +39,5 @@ api-apm-service/conf/development/dataBySite.yml
 api-apm-service/conf/staging/catalog-entities.yml
 api-apm-service/conf/staging/dataBySite.yml
 analysis/
+
+.factorypath
