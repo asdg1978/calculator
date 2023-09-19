@@ -42,8 +42,8 @@ public class CalculatorRestController {
     	List<OperationDto> result = new ArrayList<OperationDto>();
     	operations.stream().forEach(op->{
     		OperationDto dto = new OperationDto();
-    		dto.setDescription(op.getDescription());
-    		dto.setUrl(op.getUrl());
+    		dto.setOperation(op.getOperation());
+    		dto.setId(op.getId());
     		result.add(dto);
     	});
     	

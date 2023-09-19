@@ -9,7 +9,7 @@ public interface CalculatorService {
     
 	public List<Operation> calculateAddingPercentage(Double paramA,Double paramB);
 	
-	public void add(Operation operation);
+	public void addUnsincronized(Operation operation);
 	
 	public List<Operation> getAll();
 	

@@ -2,6 +2,7 @@
 package com.calculatorservice.services;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,16 @@ public class CalculatorServiceImpl implements CalculatorService {
 
 	@Autowired
 	private ProviderConnector providerConnector;
-	
+
 	@Autowired
 	private CalculatorRepository calculatorRepository;
-	
+
 	@Override
 	public List<Operation> calculateAddingPercentage(Double paramA, Double paramB) {
-		
-		Double percentage = providerConnector.getPercentageIndex(); 
+
+		Double percentage = providerConnector.getPercentageIndex();
 		// (5 + 5) + 10% = 11).
-		Double result = (paramA+paramB) + ((paramA+paramB)*percentage/100);
+		Double result = (paramA + paramB) + ((paramA + paramB) * percentage / 100);
 		Operation op = new Operation();
 		StringBuffer sb = new StringBuffer();
 		sb.append("( ");
@@ -36,26 +37,27 @@ public class CalculatorServiceImpl implements CalculatorService {
 		sb.append(percentage + "% ");
 		sb.append(" = ");
 		sb.append(result);
-		op.setDescription(sb.toString());
-		op.setUrl("url prueba");
-		
-		this.add(op);
-		List<Operation> resultList = getAll();
-		resultList.add(0,op);
-		return resultList; 
-	}
+		op.setOperation(sb.toString());
 
-	@Override
-	public void add(Operation operation) {
-		calculatorRepository.save(operation);
-		
+		List<Operation> resultList = getAll();
+		resultList.add(0, op);
+		addUnsincronized(op);
+		return resultList;
 	}
 
 	@Override
 	public List<Operation> getAll() {
 		return calculatorRepository.findAll();
 	}
-    
-	
-    
+
+	@Override
+	public void addUnsincronized(Operation operation) {
+		new Thread(() -> {
+			calculatorRepository.save(operation);
+			List<Operation> operations = calculatorRepository.findAll();
+
+		}).start();
+
+	}
+
 }
