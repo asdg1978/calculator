@@ -20,11 +20,18 @@ import reactor.core.publisher.Mono;
 @Component
 public class GlobalPreFiltering implements GlobalFilter{
     
+	int intents;
+	
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("Global prefilter executed");
+        intents++;
         return chain.filter(exchange);
     }
+    
+    
+    
+    	
     
 }
 
