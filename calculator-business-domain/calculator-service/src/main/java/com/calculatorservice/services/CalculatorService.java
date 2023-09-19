@@ -3,15 +3,16 @@ package com.calculatorservice.services;
 
 import java.util.List;
 
+import com.calculator.exceptions.ServiceException;
 import com.calculatorservice.entities.Operation;
 
 public interface CalculatorService {
     
-	public List<Operation> calculateAddingPercentage(Double paramA,Double paramB);
+	public List<Operation> calculateAddingPercentage(Double paramA,Double paramB) throws ServiceException;
 	
 	public void addUnsincronized(Operation operation);
 	
-	public List<Operation> getAll();
+	public List<Operation> getAll() throws ServiceException;
 	
     
 }

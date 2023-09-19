@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calculator.exceptions.ApiError;
+import com.calculator.exceptions.ControllerException;
+import com.calculator.exceptions.ServiceException;
 import com.calculatorservice.dto.OperationDto;
 import com.calculatorservice.entities.Operation;
 import com.calculatorservice.services.CalculatorService;
@@ -30,12 +35,16 @@ public class CalculatorRestController {
    
     
     @GetMapping("/calculateWhitPercentage")
-    public  @ResponseBody List<OperationDto> calculateWhitPercentage(@RequestParam  String paramA,@RequestParam  String paramB) {
-        
-    	//PONER VALIDACIONES, CONTROL DE EXCEPCIONES.. ETC
-    	
-    	List<Operation> operations =  calculatorService.calculateAddingPercentage(new Double(paramA), new Double(paramB));
-    	return toDto(operations);    
+    public  @ResponseBody ResponseEntity<Object> calculateWhitPercentage(@RequestParam  String paramA,@RequestParam  String paramB) throws ControllerException{
+        List<Operation> operations = null;
+		try {
+			operations = calculatorService.calculateAddingPercentage(new Double(paramA), new Double(paramB));
+		} 
+		 catch (ServiceException e) {
+		 ApiError apiError = new ApiError(e.getHttpStatus(), e.getLocalizedMessage(), e.getMessage());
+		 return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+		}
+    	return ResponseEntity.ok(toDto(operations));    
     } 
     
     private List<OperationDto> toDto(List<Operation> operations){
