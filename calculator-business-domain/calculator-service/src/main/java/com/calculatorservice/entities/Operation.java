@@ -19,8 +19,7 @@ public class Operation {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
    private long id;
-   private String url;
-   private String description;
+   private String operation;
       
    
 }

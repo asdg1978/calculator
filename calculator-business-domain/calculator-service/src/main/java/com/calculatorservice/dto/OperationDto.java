@@ -1,9 +1,12 @@
 package com.calculatorservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
 public class OperationDto {
-	private String url;
-	private String description;	
+	@JsonIgnore
+	private long id;
+	private String operation;	
 }
