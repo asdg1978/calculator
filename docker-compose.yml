@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
  ##########################################################################     
- #database service
+ # database service
  ##########################################################################       
   postgres_db:
     container_name: postgres
@@ -15,6 +15,52 @@ services:
         POSTGRES_PASSWORD: qwerty
         POSTGRES_DB: postgres  
 
+
+ ##########################################################################     
+ # eureka
+ ##########################################################################  
+  eureka_server:
+    container_name: eureka-server
+    image: calculator/microservice-docker-eureka-server:0.0.1-SNAPSHOT
+    environment:
+       - JAVA_OPTS=
+         -Xms256M 
+         -Xmx256M
+    ports:
+      - 8761:8761 
+
+ ##########################################################################     
+ # apigateway
+ ##########################################################################  
+  apigateway:
+    container_name: apigateway
+    image: calculator/microservice-docker-apigateway:0.0.1-SNAPSHOT
+    environment:
+       - JAVA_OPTS=
+         -Xms256M 
+         -Xmx256M
+         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+    ports:
+      - 8080:8080 
+    depends_on:
+      - eureka_server
+      
+##########################################################################     
+ # admin-server
+ ##########################################################################  
+  admin_server:
+    container_name: admin-server
+    image: calculator/microservice-docker-admin-server:0.0.1-SNAPSHOT
+    environment:
+       - JAVA_OPTS=
+         -Xms256M 
+         -Xmx256M
+         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+    ports:
+      - 8081:8081 
+    depends_on:
+      - eureka_server
+
  ##########################################################################     
  #product service
  ##########################################################################  
@@ -25,8 +71,12 @@ services:
        - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
+         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
     ports:
-      - 8081:8081 
+      - 8082:8082
+    depends_on:
+      - eureka_server
+      - apigateway 
       
  ##########################################################################     
  #customer service
@@ -38,12 +88,11 @@ services:
       - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
-    deploy:
-     mode: replicated
-     replicas: 2
+         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/    
     ports:
-      - "8080:8080"
-      - "8082:8080"                
+      - "8083:8083"                
     depends_on:
+      - eureka_server
+      - apigateway
       - postgres_db
       - calculator_provider
