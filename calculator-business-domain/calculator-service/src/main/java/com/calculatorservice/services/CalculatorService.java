@@ -8,11 +8,12 @@ import com.calculatorservice.entities.Operation;
 
 public interface CalculatorService {
     
-	public List<Operation> calculateAddingPercentage(Double paramA,Double paramB) throws ServiceException;
+	public List<Operation> calculateAddingPercentage(Double paramA,Double paramB, int pageInit, int page) throws ServiceException;
 	
-	public void addUnsincronized(Operation operation);
+	void addUnsincronized(Operation operation);
 	
-	public List<Operation> getAll() throws ServiceException;
+	
+	
 	
     
 }

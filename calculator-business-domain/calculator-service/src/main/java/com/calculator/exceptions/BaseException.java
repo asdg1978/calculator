@@ -6,10 +6,33 @@ class BaseException extends Exception{
 
 	private static final long serialVersionUID = -3630412074138638096L;
 	
+	
+	
+	private boolean suppressStacktrace = true;
+
+   
+
+    @Override
+    public String toString() {
+        if (suppressStacktrace) {
+            return getLocalizedMessage();
+        } else {
+            return super.toString();
+        }
+    }
+	
+	
+	
+	
+	
+	
     private HttpStatus httpStatus;
     
     public BaseException(String message,HttpStatus httpStatus) {
-        super(message);
+        
+    	
+    	super(message, null, true, false);
+    	
         this.httpStatus = httpStatus;
     }
 

@@ -5,7 +5,9 @@
  */
 package com.calculatorservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.calculatorservice.entities.Operation;
 
@@ -14,8 +16,8 @@ import com.calculatorservice.entities.Operation;
  *
  * @author adelgrosso
  */
-public interface CalculatorRepository extends JpaRepository<Operation, Long> {
+public interface CalculatorRepository extends PagingAndSortingRepository<Operation, Long> {
 
-
+	Page<Operation> findAll(Pageable pageable);
      
 }

@@ -1,10 +1,15 @@
 
 package com.calculatorservice.services;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.calculator.exceptions.RemoteException;
@@ -23,9 +28,9 @@ public class CalculatorServiceImpl implements CalculatorService {
 	private CalculatorRepository calculatorRepository;
 
 	@Override
-	public List<Operation> calculateAddingPercentage(Double paramA, Double paramB) throws ServiceException{
-		List<Operation> resultList = null;
-		Double percentage= null;;
+	public List<Operation> calculateAddingPercentage(Double paramA, Double paramB,int page, int size) throws ServiceException{
+		List<Operation> resultList = new ArrayList<Operation>();
+		Double percentage= null;
 		try {
 			percentage = providerConnector.getPercentageIndex();
 			// (5 + 5) + 10% = 11).
@@ -37,13 +42,23 @@ public class CalculatorServiceImpl implements CalculatorService {
 			sb.append(" + ");
 			sb.append(paramB);
 			sb.append(" )");
-			sb.append(" / ");
+			sb.append(" + ");
 			sb.append(percentage + "% ");
 			sb.append(" = ");
 			sb.append(result);
 			op.setOperation(sb.toString());
-			resultList = getAll();
-			resultList.add(0, op);
+			op.setDate(new Date());
+			
+			//PUEDE SER QUE TODAVIA NO HAYA NADA INSERTADO
+			//PUDE SER QUE LA CONSULTA DE LA PAGINA NO TENGA NADA
+			
+			if(page>=0)page--;
+			Page<Operation> query= findAll(page, size);
+			if(query.getTotalElements()==0 && page==0) {
+				resultList.add(0, op);
+			}else {
+				resultList = new ArrayList<Operation>(query.getContent());
+			}
 			addUnsincronized(op);
 		}catch (RemoteException e) {
 			throw new ServiceException(e);
@@ -51,18 +66,24 @@ public class CalculatorServiceImpl implements CalculatorService {
 		return resultList;
 	}
 
-	@Override
-	public List<Operation> getAll() {
-		return calculatorRepository.findAll();
-	}
-
+	
+	
+	
 	@Override
 	public void addUnsincronized(Operation operation) {
 		new Thread(() -> {
-			calculatorRepository.save(operation);
-			List<Operation> operations = calculatorRepository.findAll();
+			calculatorRepository.save(operation);			
 		}).start();
 
+	}
+	
+	
+	public Page<Operation> findAll(int page, int size)
+	{	
+		return calculatorRepository.findAll(PageRequest.of(page, size,Sort.by("date").ascending()));
+		
+				
+		
 	}
 
 }
