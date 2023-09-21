@@ -6,22 +6,21 @@ services:
  # database service
  ##########################################################################       
   postgres_db:
-    container_name: postgres
+    container_name: postgres_db
     image: postgres:latest
     ports:
         - 5432:5432
     environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: qwerty
-        POSTGRES_DB: postgres  
-
+        POSTGRES_DB: calculator
 
  ##########################################################################     
  # eureka
  ##########################################################################  
   eureka_server:
     container_name: eureka-server
-    image: calculator/microservice-docker-eureka-server:0.0.1-SNAPSHOT
+    image: calculator/eureka-server:0.0.1
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -34,7 +33,7 @@ services:
  ##########################################################################  
   apigateway:
     container_name: apigateway
-    image: calculator/microservice-docker-apigateway:0.0.1-SNAPSHOT
+    image: calculator/apigateway:0.0.1
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -50,7 +49,7 @@ services:
  ##########################################################################  
   admin_server:
     container_name: admin-server
-    image: calculator/microservice-docker-admin-server:0.0.1-SNAPSHOT
+    image: calculator/admin-server:0.0.1
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -62,11 +61,11 @@ services:
       - eureka_server
 
  ##########################################################################     
- #product service
+ # provider
  ##########################################################################  
   calculator_provider:
     container_name: calculator-provider
-    image: calculator/microservice-docker-calculator-provider:0.0.1-SNAPSHOT
+    image: calculator/calculator-provider:0.0.1
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -79,20 +78,24 @@ services:
       - apigateway 
       
  ##########################################################################     
- #customer service
+ #service
  ##########################################################################        
   calculator_service:
-    #container_name: calculator-service
-    image: calculator/microservice-docker-calculator-service:0.0.1-SNAPSHOT   
+    container_name: calculator-service
+    image: calculator/calculator-service:0.0.1   
     environment:
       - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
-         -DEUREKA_SERVER=http://eureka-server:8761/eureka/    
+         -DEUREKA_SERVER=http://eureka-server:8761/eureka/
+         -DSPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:5432/calculator
+         -DSPRING_DATASOURCE_USERNAME=postgres
+         -DSPRING_DATASOURCE_PASSWORD=qwerty
+         -DSPRING_JPA_HIBERNATE_DDL_AUTO=create
     ports:
       - "8083:8083"                
     depends_on:
+      - postgres_db
       - eureka_server
       - apigateway
-      - postgres_db
       - calculator_provider

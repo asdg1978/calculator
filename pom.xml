@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.calculator</groupId>
 	<artifactId>calculator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -123,7 +123,7 @@
                     </execution>
                 </executions>
                 <configuration>                       
-                    <repository>calculator/microservice-docker-${project.artifactId}</repository>
+                    <repository>calculator/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
