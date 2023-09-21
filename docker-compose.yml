@@ -39,7 +39,7 @@ services:
        - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
-         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+         -DEUREKA_SERVER=http://eureka-server:8761/eureka/
     ports:
       - 8080:8080 
     depends_on:
@@ -55,7 +55,7 @@ services:
        - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
-         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+         -DEUREKA_SERVER=http://eureka-server:8761/eureka/
     ports:
       - 8081:8081 
     depends_on:
@@ -71,7 +71,7 @@ services:
        - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
-         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+         -DEUREKA_SERVER=http://eureka-server:8761/eureka/
     ports:
       - 8082:8082
     depends_on:
@@ -88,7 +88,7 @@ services:
       - JAVA_OPTS=
          -Xms256M 
          -Xmx256M
-         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/    
+         -DEUREKA_SERVER=http://eureka-server:8761/eureka/    
     ports:
       - "8083:8083"                
     depends_on:
