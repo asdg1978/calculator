@@ -80,7 +80,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 	
 	public Page<Operation> findAll(int page, int size)
 	{	
-		return calculatorRepository.findAll(PageRequest.of(page, size,Sort.by("date").ascending()));
+		return calculatorRepository.findAll(PageRequest.of(page, size,Sort.by("date").descending()));
 		
 				
 		

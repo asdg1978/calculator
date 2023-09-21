@@ -64,7 +64,7 @@ public class CalculatorRestController {
     	List<OperationDto> result = new ArrayList<OperationDto>();
     	operations.stream().forEach(op->{
     		OperationDto dto = new OperationDto();
-    		dto.setOperation(op.getOperation()+" at " +DateUtils.dateToString(op.getDate()));    		
+    		dto.setOperation(op.getOperation()+" AT " +DateUtils.dateToString(op.getDate()));    		
     		result.add(dto);
     	});
     	

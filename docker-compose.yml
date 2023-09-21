@@ -20,7 +20,7 @@ services:
  ##########################################################################  
   eureka_server:
     container_name: eureka-server
-    image: calculator/eureka-server:0.0.1
+    image: adelgrosso1978/calculator-eureka-server:latest
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -33,7 +33,8 @@ services:
  ##########################################################################  
   apigateway:
     container_name: apigateway
-    image: calculator/apigateway:0.0.1
+    #image: calculator/apigateway:0.0.1
+    image: adelgrosso1978/calculator-api-gateway:latest
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -44,28 +45,12 @@ services:
     depends_on:
       - eureka_server
       
-##########################################################################     
- # admin-server
- ##########################################################################  
-  admin_server:
-    container_name: admin-server
-    image: calculator/admin-server:0.0.1
-    environment:
-       - JAVA_OPTS=
-         -Xms256M 
-         -Xmx256M
-         -DEUREKA_SERVER=http://eureka-server:8761/eureka/
-    ports:
-      - 8081:8081 
-    depends_on:
-      - eureka_server
-
  ##########################################################################     
  # provider
  ##########################################################################  
   calculator_provider:
     container_name: calculator-provider
-    image: calculator/calculator-provider:0.0.1
+    image: adelgrosso1978/calculator-provider:latest
     environment:
        - JAVA_OPTS=
          -Xms256M 
@@ -82,7 +67,7 @@ services:
  ##########################################################################        
   calculator_service:
     container_name: calculator-service
-    image: calculator/calculator-service:0.0.1   
+    image: adelgrosso1978/calculator-service:latest   
     environment:
       - JAVA_OPTS=
          -Xms256M 

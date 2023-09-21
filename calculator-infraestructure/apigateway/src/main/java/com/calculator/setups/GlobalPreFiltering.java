@@ -22,14 +22,6 @@ public class GlobalPreFiltering implements GlobalFilter{
 	
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
-        intents++;
-        if(intents>1){
-        	intents=0;
-        //	//throw new RuntimeException("SERVICIO BLOQUEADO POR MAS DE 3 PETICIONES");
-        	
-        //	throw new GatewayException("SERVICIO BLOQUEADO POR MAS DE 3 PETICIONES",HttpStatus.SERVICE_UNAVAILABLE);
-        }
-        
         return chain.filter(exchange);
     }
     
