@@ -43,42 +43,31 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<build>
-		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>${dockerfile-maven-version}</version>
-				<executions>
-					<execution>
-						<id>build-docker-image</id>
-						<phase>package</phase>
-						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<buildArgs>
-						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-					</buildArgs>
-					<username>${project.groupId}</username>
-        			<password>${env.DOCKER_HUB_TOKEN}</password>
-        			<repository>registry.hub.docker.com/${project.groupId}/${project.artifactId}</repository>
-        			<tag>${project.version}</tag>
-				</configuration>
-			</plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile-maven-version}</version>                               
+                <executions>
+                    <execution>                        
+                        <id>build-docker-image</id>
+                        <phase>package</phase>
+                        <goals>                                              
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>                       
+                    <repository>calculator/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                    <username>adelgrosso1978</username>
+        			<password>dckr_pat_j-WxaOt1fTvKPbZLd2ftsZqu7Bg</password>
+                </configuration>
+            </plugin>
 		</plugins>
-	</build>
-		</plugins>
-		
-
-		
 	</build>
 
 </project>
