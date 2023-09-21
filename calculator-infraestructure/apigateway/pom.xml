@@ -63,7 +63,7 @@
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
-                    <username>asdg1978</username>
+                    <username>adelgrosso1978</username>
         			<password>Lqmtp0611--</password>
                 </configuration>
             </plugin>
