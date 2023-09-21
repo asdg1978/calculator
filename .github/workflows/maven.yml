@@ -18,4 +18,4 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -f  /calculator-business-domain/calculator-provider/ clean compile
+        run: mvn -f /calculator-business-domain/calculator-provider/pom.xml clean compile
