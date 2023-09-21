@@ -59,15 +59,13 @@
                     </execution>
                 </executions>
                 <configuration>                       
-                    <repository>calculator/${project.artifactId}</repository>
+                    <repository>registry.hub.docker.com/${project.groupId}/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
                     <username>adelgrosso1978</username>
-        			<password>dckr_pat_j-WxaOt1fTvKPbZLd2ftsZqu7Bg</password>
-        			<repository>registry.hub.docker.com/${project.groupId}/${project.artifactId}</repository>
-        			<tag>${project.version}</tag>
+        			<password>dckr_pat_j-WxaOt1fTvKPbZLd2ftsZqu7Bg</password>        			
                 </configuration>
             </plugin>
 
