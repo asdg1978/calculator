@@ -58,7 +58,7 @@
                     </execution>
                 </executions>
                 <configuration>                       
-                    <repository>calculator/${project.artifactId}</repository>
+                    <repository>registry.hub.docker.com/${project.groupId}/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
