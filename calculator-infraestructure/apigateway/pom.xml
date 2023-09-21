@@ -64,7 +64,7 @@
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
                     <username>adelgrosso1978</username>
-        			<password>dckr_pat_QnahyGIFPvb19CLgxKIYfb1nfG4</password>
+        			<password>dckr_pat_uAs2Lc4kcZaXLOuUzUKJf-nUm1M</password>
                 </configuration>
             </plugin>
 		</plugins>
