@@ -60,7 +60,7 @@
                  <configuration>                       
                     <tag>0.0.1</tag>
                     <buildArgs>
-                        <JAR_FILE>apigateway.jar</JAR_FILE>
+                        <JAR_FILE>apigateway-0.0.1</JAR_FILE>
                     </buildArgs>
 		    		<username>adelgrosso1978</username>
         			<password>dckr_pat_j-WxaOt1fTvKPbZLd2ftsZqu7Bg</password>
